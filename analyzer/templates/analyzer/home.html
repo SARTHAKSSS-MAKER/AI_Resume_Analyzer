@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="min-h-screen bg-gradient-to-br from-slate-950 via-indigo-950 to-slate-900">
+
+    <!-- Navbar -->
+    <div class="navbar px-10 py-4">
+        <div class="flex-1">
+            <a class="text-white text-2xl font-bold">
+                🚀 AI Resume Analyzer
+            </a>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="hero min-h-[85vh]">
+        <div class="hero-content text-center">
+
+            <div class="max-w-4xl">
+
+                <div
+                    class="backdrop-blur-xl bg-white/10 border border-white/20 rounded-3xl shadow-2xl p-12">
+
+                    <h1
+                        class="text-6xl md:text-7xl font-extrabold text-white leading-tight">
+
+                        Analyze Your Resume
+                        <span
+                            class="bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
+                            With AI
+                        </span>
+
+                    </h1>
+
+                    <p
+                        class="text-gray-300 text-xl mt-6">
+
+                        Get ATS Score, Keyword Matching,
+                        Skill Analysis and Smart AI Suggestions
+                        in seconds.
+                    </p>
+
+                    <div class="mt-10">
+                       <a href="{% url 'upload' %}" class="btn btn-primary">
+    🚀 Analyze Resume
+</a>
+                        
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- Upload Modal -->
+<dialog id="upload_modal" class="modal">
+
+    <div class="modal-box bg-slate-900 text-white border border-slate-700">
+
+        <h3 class="font-bold text-3xl mb-6">
+            Upload Resume
+        </h3>
+
+        <input
+            type="file"
+            class="file-input file-input-bordered w-full text-black">
+
+        <button
+            class="btn btn-primary w-full mt-6">
+
+            Analyze Now
+
+        </button>
+
+    </div>
+
+    <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+    </form>
+
+</dialog>
+
+{% endblock %}

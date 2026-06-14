@@ -1,0 +1,141 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Resume</title>
+    {% tailwind_css %}
+</head>
+
+<body class="bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 min-h-screen">
+
+<div class="max-w-5xl mx-auto p-8">
+
+    <div class="bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl p-10">
+
+        <h1 class="text-5xl font-extrabold text-center text-white mb-4">
+            📄 AI Resume Analyzer
+        </h1>
+
+        <p class="text-center text-gray-300 mb-8">
+            Upload one or more resumes and analyze candidates.
+        </p>
+        
+
+        {% if error %}
+<div class="alert alert-error mb-4">
+    {{ error }}
+</div>
+{% endif %}
+        <form method="POST" enctype="multipart/form-data">
+
+            {% csrf_token %}
+<textarea
+    name="job_description"
+    class="textarea textarea-bordered w-full mb-4 text-black"
+    placeholder="Paste Job Description Here"
+    rows="6"
+>{{ job_description }}</textarea>
+
+            <div class="border-2 border-dashed border-blue-400 rounded-2xl p-10 text-center">
+
+                <input
+                    type="file"
+                    name="resume"
+                    multiple
+                    class="file-input file-input-bordered file-input-primary w-full"
+                >
+
+                <p class="mt-4 text-gray-400">
+                    Upload one or more resumes
+                </p>
+
+            </div>
+
+            <button
+                type="submit"
+                class="btn btn-primary w-full mt-8 text-lg"
+            >
+                🚀 Analyze Resume
+            </button>
+
+        </form>
+
+        {% if results %}
+
+        <hr class="my-8 border-gray-500">
+
+        <h2 class="text-3xl font-bold text-white mb-6">
+            🏆 Candidate Ranking
+        </h2>
+
+        <div class="overflow-x-auto">
+
+            <table class="table w-full text-white">
+
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Resume</th>
+                        <th>Role</th>
+                        <th>ATS Score</th>
+                        <th>Report</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                {% for r in results %}
+
+                    <tr>
+                        <td>#{{ forloop.counter }}</td>
+                        <td>{{ r.name }}</td>
+                        <td>{{ r.role }}</td>
+                        <td>{{ r.score }}%</td>
+
+                        <td>
+                            <a
+                                href="{% url 'download_report' %}?resume={{ r.name }}"
+                                class="btn btn-success btn-sm"
+                            >
+                                📥 Download
+                            </a>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <div class="mt-8 p-6 rounded-xl bg-slate-800 text-white">
+
+            <h3 class="text-2xl font-bold mb-4">
+                🥇 Top Candidate
+            </h3>
+
+            <p>
+                <strong>Name:</strong> {{ results.0.name }}
+            </p>
+
+            <p>
+                <strong>Role:</strong> {{ results.0.role }}
+            </p>
+
+            <p>
+                <strong>ATS Score:</strong> {{ results.0.score }}%
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>
